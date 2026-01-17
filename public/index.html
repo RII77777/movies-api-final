@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies API</title>
+</head>
+<body>
+    <h1>Movies Database</h1>
+
+    <h2>Add new movie</h2>
+    <input type="text" id="title" placeholder="Title" required>
+    <input type="text" id="director" placeholder="Director" required>
+    <input type="number" id="year" placeholder="Year" required>
+    <button onclick="addMovie()">Add movie</button>
+    <div id="movieMessage" style="color: green; margin: 5px;"></div>
+
+    <h2>All movies</h2>
+    <div id="moviesList"></div>
+
+    <hr>
+
+    <h2>Add review</h2>
+    <input type="text" id="movieId" placeholder="Movie ID" required>
+    <input type="text" id="author" placeholder="Your name" required>
+    <input type="text" id="reviewText" placeholder="Review text" required>
+    <input type="number" id="reviewRating" placeholder="Rating 1-5" min="1" max="5" required>
+    <button onclick="addReview()">Add review</button>
+    <div id="reviewMessage" style="color: green; margin: 5px;"></div>
+
+    <h2>All reviews</h2>
+    <div id="reviewsList"></div>
+
+    <script>
+        async function loadMovies() {
+            const res = await fetch('/movies');
+            const movies = await res.json();
+            
+            const moviesList = document.getElementById('moviesList');
+            moviesList.innerHTML = '';
+            
+            movies.forEach(movie => {
+                const movieDiv = document.createElement('div');
+                movieDiv.style.border = '1px solid #ccc';
+                movieDiv.style.margin = '10px';
+                movieDiv.style.padding = '10px';
+                
+                movieDiv.innerHTML = `
+                    <h3>${movie.title} (${movie.year})</h3>
+                    <p><strong>Director:</strong> ${movie.director}</p>
+                    <p><strong>ID:</strong> ${movie._id}</p>
+                    <button onclick="deleteMovie('${movie._id}')">Delete</button>
+                `;
+                
+                moviesList.appendChild(movieDiv);
+            });
+        }
+
+        async function addMovie() {
+            const title = document.getElementById('title').value;
+            const director = document.getElementById('director').value;
+            const year = document.getElementById('year').value;
+
+            if (!title || !director || !year) {
+                document.getElementById('movieMessage').textContent = 'Please fill all fields';
+                document.getElementById('movieMessage').style.color = 'red';
+                return;
+            }
+
+            const res = await fetch('/movies', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: title,
+                    director: director,
+                    year: Number(year)
+                })
+            });
+
+            if (res.ok) {
+                document.getElementById('movieMessage').textContent = 'Movie added successfully!';
+                document.getElementById('movieMessage').style.color = 'green';
+                
+                document.getElementById('title').value = '';
+                document.getElementById('director').value = '';
+                document.getElementById('year').value = '';
+                
+                loadMovies();
+            } else {
+                document.getElementById('movieMessage').textContent = 'Error adding movie';
+                document.getElementById('movieMessage').style.color = 'red';
+            }
+        }
+
+        async function deleteMovie(movieId) {
+            await fetch(`/movies/${movieId}`, {
+                method: 'DELETE'
+            });
+            loadMovies();
+        }
+
+        async function loadReviews() {
+            const res = await fetch('/reviews');
+            const reviews = await res.json();
+            
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = '';
+            
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.style.border = '1px solid #ccc';
+                reviewDiv.style.margin = '10px';
+                reviewDiv.style.padding = '10px';
+                
+                reviewDiv.innerHTML = `
+                    <p><strong>${review.author}</strong> says:</p>
+                    <p>${review.text}</p>
+                    <p>Rating: ${review.rating}/5</p>
+                    <button onclick="deleteReview('${review._id}')">Delete</button>
+                `;
+                
+                reviewsList.appendChild(reviewDiv);
+            });
+        }
+
+        async function addReview() {
+            const movieId = document.getElementById('movieId').value;
+            const author = document.getElementById('author').value;
+            const text = document.getElementById('reviewText').value;
+            const rating = document.getElementById('reviewRating').value;
+
+            if (!movieId || !author || !text || !rating) {
+                document.getElementById('reviewMessage').textContent = 'Please fill all fields';
+                document.getElementById('reviewMessage').style.color = 'red';
+                return;
+            }
+
+            const res = await fetch('/reviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    movieId: movieId,
+                    author: author,
+                    text: text,
+                    rating: Number(rating)
+                })
+            });
+
+            if (res.ok) {
+                document.getElementById('reviewMessage').textContent = 'Review added successfully!';
+                document.getElementById('reviewMessage').style.color = 'green';
+                
+                document.getElementById('movieId').value = '';
+                document.getElementById('author').value = '';
+                document.getElementById('reviewText').value = '';
+                document.getElementById('reviewRating').value = '';
+                
+                loadReviews();
+            } else {
+                document.getElementById('reviewMessage').textContent = 'Error adding review';
+                document.getElementById('reviewMessage').style.color = 'red';
+            }
+        }
+
+        async function deleteReview(reviewId) {
+            await fetch(`/reviews/${reviewId}`, {
+                method: 'DELETE'
+            });
+            loadReviews();
+        }
+
+        loadMovies();
+        loadReviews();
+    </script>
+</body>
+</html>
