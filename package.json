@@ -1,7 +1,7 @@
 {
-  "name": "assignment4-movies-api",
+  "name": "final-movies-api",
   "version": "1.0.0",
-  "description": "Movie database with authentication and RBAC",
+  "description": "Movie database API with RBAC and frontend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -12,7 +12,9 @@
     "mongoose": "^7.6.3",
     "bcrypt": "^5.1.1",
     "jsonwebtoken": "^9.0.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express-validator": "^7.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
