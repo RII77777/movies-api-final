@@ -7,7 +7,9 @@ A full-stack movie database application with user authentication, role-based acc
 ## Live Deployment
 
 Live Application: https://movies-api-69x7.onrender.com/
+
 GitHub Repository: https://github.com/RII77777/movies-api-final
+
 API Base URL:  https://movies-api-69x7.onrender.com/api
 
 ## Features
@@ -80,53 +82,92 @@ Code Organization: Modular, well-commented code
 
 
 API Documentation
+
 Authentication Endpoints
+
 Method	Endpoint	Description	Access
+
 POST	/api/auth/register	Register new user	Public
+
 POST	/api/auth/login	Login user	Public
+
 Movie Endpoints
+
 Method	Endpoint	Description	Access
+
 GET	/api/movies	Get all movies	Public
+
 GET	/api/movies/:id	Get single movie	Public
+
 POST	/api/movies	Create new movie	Admin only
+
 PUT	/api/movies/:id	Update movie	Admin only
+
 DELETE	/api/movies/:id	Delete movie	Admin only
+
 Review Endpoints
+
 Method	Endpoint	Description	Access
+
 GET	/api/reviews	Get all reviews	Public
+
 POST	/api/reviews	Create review	Authenticated
+
 PUT	/api/reviews/:id	Update review	Owner/Admin
+
 DELETE	/api/reviews/:id	Delete review	Owner/Admin
 
 ## Project Structure
 
-text
 project/
 
-|controllers| #logic
-│   ├── authController.js
-│   ├── movieController.js
-│   └── reviewController.js
-├── models/              # MongoDB schemas
-│   ├── User.js
-│   ├── Movie.js
-│   └── Review.js
-├── middleware/          # Custom middleware
-│   ├── authMiddleware.js
-│   ├── roleMiddleware.js
-│   ├── ownerMiddleware.js
-│   └── validationMiddleware.js
-├── routes/              # API routes
-│   ├── authRoutes.js
-│   ├── movieRoutes.js
-│   └── reviewRoutes.js
-├── public/              # Frontend files
-│   ├── css/
-│   ├── js/
-│   └── index.html
-├── .env                 # Environment variables
-├── package.json         # Dependencies
-└── server.js           # Application entry point
+- controllers/
+
+authController.js
+
+movieController.js
+
+reviewController.js
+
+- models/     # MongoDB schemas
+
+User.js
+
+ Movie.js
+
+ Review.js
+
+-  middleware/    #Custom middleware
+
+│ authMiddleware.js
+
+│ roleMiddleware.js
+
+│ ownerMiddleware.js
+
+│ validationMiddleware.js
+
+- routes/        # API routes
+
+│authRoutes.js
+
+│ movieRoutes.js
+
+│ reviewRoutes.js
+
+- public/       # Frontend files
+
+│ css/
+
+│ js/
+
+│ index.html
+
+- .env            # Environment variables
+
+- package.json        # Dependencies
+
+- server.js # Application entry point
 
 ## Local Development Setup
 
@@ -139,6 +180,7 @@ MongoDB Atlas account
 Git
 
 Installation Steps
+
 Clone the repository:
 
 git clone https://github.com/RII77777/movies-api-final
