@@ -33,10 +33,15 @@ Data Validation - Server-side validation for all inputs
 ## Technology Stack
 
  **Backend**: Node.js, Express.js
+
  **Database**: MongoDB with Mongoose ODM
+
  **Authentication**: JWT (JSON Web Tokens), bcrypt
+
  **Frontend**: HTML5, CSS3, Vanilla JavaScript
+
  **Middleware**: CORS, express-validator, custom auth middleware
+ 
  **Deployment**: Render (Backend), MongoDB Atlas (Database)
 
 ##  Getting Started
